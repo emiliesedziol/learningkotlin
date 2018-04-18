@@ -338,3 +338,315 @@ fun main(args: Array<String>) {
 fun concat(texts: List<String>, separator: String = ", ") = texts.joinToString(separator)
 Kotlin : Java : Pick
 
+/* checked exception
+package basics;
+
+import java.io.IOException;
+
+public class MainCheckException {
+    public static void main(String[] args) {
+        try {
+            canThrowAnException();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void canThrowAnException() throws IOException {
+
+        throw new IOException();
+    }
+}
+
+/* unchecked exception
+package basics;
+
+
+public class MainCheckException {
+    public static void main(String[] args) {
+        canThrowAnException();
+    }
+
+    static void canThrowAnException() {
+
+        throw new IllegalStateException();
+    }
+}
+
+
+
+fun main(args: Array<String>) {
+
+    val timesTwo = { x: Int -> x*2 }
+    val add: (Int, Int) -> Int = { x: Int, y:Int -> x + y }
+
+    val list = (1..100).toList()
+
+    println(list.filter({ element -> element % 2 == 0}))  // java verion
+
+	println(list.filter({ it % 2 == 0}))  // kotlin
+}
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+
+Process finished with exit code 0
+
+package basics
+
+fun main(args: Array<String>) {
+
+    val timesTwo = { x: Int -> x*2 }
+    val add: (Int, Int) -> Int = { x: Int, y:Int -> x + y }
+
+    val list = (1..100).toList()
+
+    println("Java")
+    println(list.filter({ element -> element % 2 == 0}))
+
+
+    println("Kotlin ")
+    println(list.toString())
+    println(list.filter({ it % 2 == 0}))
+
+    println("Kotlin using a function")
+    println(list.toString())
+    println(list.filter({ it.even() }))
+    println(list.filter{ it.even() })  // can also be coded as this
+
+    println("is even")
+    println(list.toString())
+    println(list.filter(::isEven))
+
+    println("is odd")
+    println(list.filter(::isOdd))
+
+}
+
+fun isEven(i: Int) = i % 2 == 0
+
+fun isOdd(i: Int) = i % 2 != 0
+
+fun Int.even() = this % 2 == 0
+Java
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+Kotlin 
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+Kotlin using a function
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+is even
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+is odd
+[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99]
+
+
+fun main(args: Array<String>) {
+
+    val list = (1..100).toList()
+
+    val doubled = list.map { element -> element * 2 }
+
+    println(doubled)
+}
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180, 182, 184, 186, 188, 190, 192, 194, 196, 198, 200]
+
+package basics
+
+fun main(args: Array<String>) {
+
+    val list = (1..100).toList()
+
+    val doubled = list.map { element -> element * 2 }
+
+    //same ad
+
+    list.map { it * 2 }
+
+    println(doubled)
+
+    val average = list.average()
+    println("average")
+    println(average)
+
+    val shifted = list.map{ it - average}
+    println("shifted")
+    println(shifted)
+
+    // flatMap()
+    val nestedList = listOf(
+            (1..10).toList(),
+            (1..20).toList(),
+            (21..30).toList()
+    )
+
+    val notFlattened = nestedList.map { it.sortedDescending() }
+    println("nested lists")
+    println(notFlattened)
+
+    val flattened = nestedList.flatMap{ it.sortedDescending() }
+    println("flattened")
+    println(flattened)
+}
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180, 182, 184, 186, 188, 190, 192, 194, 196, 198, 200]
+average
+50.5
+shifted
+[-49.5, -48.5, -47.5, -46.5, -45.5, -44.5, -43.5, -42.5, -41.5, -40.5, -39.5, -38.5, -37.5, -36.5, -35.5, -34.5, -33.5, -32.5, -31.5, -30.5, -29.5, -28.5, -27.5, -26.5, -25.5, -24.5, -23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5, -15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 24.5, 25.5, 26.5, 27.5, 28.5, 29.5, 30.5, 31.5, 32.5, 33.5, 34.5, 35.5, 36.5, 37.5, 38.5, 39.5, 40.5, 41.5, 42.5, 43.5, 44.5, 45.5, 46.5, 47.5, 48.5, 49.5]
+nested lists
+[[10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [30, 29, 28, 27, 26, 25, 24, 23, 22, 21]]
+flattened
+[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21]
+
+Process finished with exit code 0
+
+
+fun main(args: Array<String>) {
+
+    val list = (1..1000).toList()
+
+    val first10 = list.take(10)
+    val withoutfirst900 = list.drop(900)
+    println("first10")
+    println(first10)
+    println("withoutfirst900")
+    println(withoutfirst900)
+
+    println("")
+    val list1 = generateSequence(0) { it + 10 }
+    val first = list1.take(10).toList()
+    val first20 = list1.take(20).toList()
+    println("first10")
+    println(first)
+    println("first20")
+    println(first20)
+
+    println("")
+    val list2 = generateSequence(0) {
+        println("Calculating ${it+10}")
+        it + 10
+    }
+    val firstb = list2.take(10).toList()
+    val firstb20 = list2.take(20).toList()
+    println("firstb")
+    println(firstb)
+    println("firstb20")
+    println(firstb20)
+}
+first10
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+withoutfirst900
+[901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000]
+
+first10
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+first20
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+
+Calculating 10
+Calculating 20
+Calculating 30
+Calculating 40
+Calculating 50
+Calculating 60
+Calculating 70
+Calculating 80
+Calculating 90
+Calculating 10
+Calculating 20
+Calculating 30
+Calculating 40
+Calculating 50
+Calculating 60
+Calculating 70
+Calculating 80
+Calculating 90
+Calculating 100
+Calculating 110
+Calculating 120
+Calculating 130
+Calculating 140
+Calculating 150
+Calculating 160
+Calculating 170
+Calculating 180
+Calculating 190
+firstb
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+firstb20
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+
+Process finished with exit code 0
+
+
+package basics
+
+fun main(args: Array<String>) {
+
+    val list = listOf("Hi", "there", "Kotlin", "fans")
+    val containsT = listOf(false, true, true, false)
+
+    // pair of string to boolean
+    val zipped: List<Pair<String, Boolean>> = list.zip(containsT)
+
+    val mapping = list.zip(list.map { it.contains("t")})
+
+    println(zipped)
+    println(mapping)
+}
+[(Hi, false), (there, true), (Kotlin, true), (fans, false)]
+[(Hi, false), (there, true), (Kotlin, true), (fans, false)]
+
+Process finished with exit code 0
+
+fun main(args: Array<String>) {
+
+    val timesTwo = { x: Int -> x*2 }
+    val add: (Int, Int) -> Int = { x: Int, y:Int -> x + y }
+
+    val list = (1..100).toList()
+
+    println("Java")
+    println(list.filter({ element -> element % 2 == 0}))
+
+
+    println("Kotlin ")
+    println(list.toString())
+    println(list.filter({ it % 2 == 0}))
+
+    println("Kotlin using a function")
+    println(list.toString())
+    println(list.filter({ it.even() }))
+    println(list.filter{ it.even() })  // can also be coded as this
+
+    println("is even")
+    println(list.toString())
+    println(list.filter(::isEven))
+
+    println("is odd")
+    println(list.filter(::isOdd))
+
+}
+
+fun isEven(i: Int) = i % 2 == 0
+
+fun isOdd(i: Int) = i % 2 != 0
+
+fun Int.even() = this % 2 == 0
+Java
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+Kotlin 
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+Kotlin using a function
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+is even
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+is odd
+[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99]
+
+Process finished with exit code 0
