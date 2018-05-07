@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.example.habittrainer.db.HabitDBTable
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         rv.setHasFixedSize(true)
 
         rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = HabitsAdapter(getSampleHabits())
+        rv.adapter = HabitsAdapter(HabitDBTable(this).readAllHabits())
   /*      iv_icon.setImageResource(R.drawable.water)
         tv_description.text = getString(R.string.drink_water)
         tv_title.text = getString(R.string.drink_water_description) */

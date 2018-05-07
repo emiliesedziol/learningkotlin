@@ -1,8 +1,10 @@
 package com.example.habittrainer
 
-data class Habit(val title: String, val description: String, val image: Int)
+import android.graphics.Bitmap
 
-fun getSampleHabits(): List<Habit> {
+data class Habit(val title: String, val description: String, val image: Bitmap)
+
+/*fun getSampleHabits(): List<Habit> {
     return listOf(
             Habit("Go for a walk",
                     "walk in the sun",
@@ -16,4 +18,4 @@ fun getSampleHabits(): List<Habit> {
                     "Watch out",
                     R.drawable.bird)
     )
-}
+} */
